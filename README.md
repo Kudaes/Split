@@ -31,7 +31,7 @@ This technique by its own is not enough to bypass a EDR; if your code is none op
 - No use of syscalls.
 - No unhooking.
 - Etw not pached. 
-- Despite the use of Dinvoke_rs, im not encrypting some string literals that show away the APIs that im using.
+- Others.
 
 On the other hand, I just have tested this approach against the mentioned EDRs, and I don't know if other EDRs will be bypassed as well. You can test it and let me know how it went ;)
 
