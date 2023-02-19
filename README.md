@@ -8,7 +8,7 @@ This way, we break the shellcode injection procedure into simpler tasks, and run
 
 I've test this PoC against three of the most common EDRs nowadays: MDE, CrowdStrike and SentinelOne. The results speak for themselves: 2 out 3 EDRs raised a Remote Process Injection alert when running the PoC without the forks; on the contrary, none of them raised any alert once I introduced the forking mechanism. 
 
-Of course, even with the fork mechanism we can see in the raw telemetry the events corresponding to process creation, thread creation and also all the cross process behavior, but it seems it is not enough for the EDRs to tag the activity as malicious, proving the point of this PoC. By spliting the malicious behaviour into simpler tasks and running them from a different process each one we confuse and prevent the EDRs from raising any alert.
+Of course, even with the fork mechanism we can see in the raw telemetry the events corresponding to process creation, thread creation and also all the cross process behavior, but it seems it is not enough for the EDRs to tag the activity as malicious, proving the point of this PoC. By spliting the malicious behaviour into simpler tasks and running each one of them from a different process we can confuse and prevent the EDRs from raising any alert.
 
 This same result could be achieved in different ways, I just used the fork mechanism to simplify my code and reduce the cross process activity. 
 
