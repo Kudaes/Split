@@ -18,7 +18,7 @@ If you want to test this by yourself, compile the code with and without the call
 
 Since we are using [LITCRYPT](https://github.com/anvie/litcrypt.rs) plugin to obfuscate string literals (just for the Dinvoke_rs code), it is required to set up the environment variable LITCRYPT_ENCRYPT_KEY before compiling the code:
 
-	C:\Users\User\Desktop\RustChain> set LITCRYPT_ENCRYPT_KEY="yoursupersecretkey"
+	C:\Users\User\Desktop\Split> set LITCRYPT_ENCRYPT_KEY="yoursupersecretkey"
 
 After that, simply compile the code and run the tool:
 
