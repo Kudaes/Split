@@ -8,7 +8,7 @@ I've test this PoC against three of the most common EDRs nowadays: MDE, CrowdStr
 
 Of course, even with the fork mechanism we can see in the raw telemetry the events corresponding to process creation, thread creation and also all the cross process behavior, but it seems it is not enough for the EDRs to tag the activity as malicious, proving the point of this PoC. By spliting the malicious behaviour into simpler tasks and running them from a different process each one we confuse and prevent the EDRs from raising any alert.
 
-This same result could be achieved in different ways, I just used the fork mechanism to simplify my code and reduce the cross process activity between the spawned processes. 
+This same result could be achieved in different ways, I just used the fork mechanism to simplify my code and reduce the cross process activity. 
 
 If you want to test this by yourself, compile the code with and without the calls to the function fork(), and then run both payloads in an environment with the desired EDR.
 
