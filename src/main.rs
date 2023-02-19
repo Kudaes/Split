@@ -51,7 +51,8 @@ fn main() {
         {
             return;
         }
-
+        
+        // Remove all these if statements in order to obtain the PoC without the fork mechanism
         if fork() == 0
         {
            return;
