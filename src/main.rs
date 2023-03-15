@@ -145,7 +145,7 @@ fn print_help() {
     
     let help = lc!("
     USAGE:
-        Tool.exe [OPTIONS] <PID>
+        split.exe [OPTIONS] <PID>
     ARGS:
         <PID>                       Remote Process ID.
     OPTIONS:
