@@ -2,14 +2,15 @@
 extern crate litcrypt;
 use_litcrypt!();
 
+use std::cell::UnsafeCell;
 use std::mem::size_of;
 use std::panic;
 use std::{collections::HashMap, ptr};
 use std::ffi::CString;
 use bindings::Windows::Win32::System::Kernel::UNICODE_STRING;
-use bindings::Windows::Win32::System::Threading::{PROCESS_BASIC_INFORMATION};
+use bindings::Windows::Win32::System::Threading::PROCESS_BASIC_INFORMATION;
 use bindings::Windows::Win32::System::WindowsProgramming::{OBJECT_ATTRIBUTES,CLIENT_ID};
-use bindings::Windows::Win32::{Foundation::{HANDLE, HINSTANCE, PSTR}, {System::Threading::{GetCurrentProcess}}};
+use bindings::Windows::Win32::{Foundation::{HANDLE, HINSTANCE, PSTR}, System::Threading::GetCurrentProcess};
 use data::{ApiSetNamespace, ApiSetNamespaceEntry, ApiSetValueEntry, DLL_PROCESS_ATTACH, EAT, EntryPoint, PVOID, PeMetadata, PS_CREATE_INFO, PS_ATTRIBUTE_LIST};
 use libc::c_void;
 use litcrypt::lc;
@@ -520,7 +521,7 @@ pub fn call_module_entry_point(pe_info: PeMetadata, module_base_address: i64) ->
 ///     }
 /// }
 /// ```
-pub fn get_function_address_by_ordinal(module_base_address: i64, ordinal: u32) -> i64 {
+pub fn get_function_address_by_ordinal(module_base_address: isize, ordinal: u32) -> isize {
 
     let ret = ldr_get_procedure_address(module_base_address, "", ordinal);
 
@@ -549,17 +550,18 @@ pub fn get_function_address_by_ordinal(module_base_address: i64, ordinal: u32) -
 ///     }
 /// }
 /// ```
-pub fn ldr_get_procedure_address (module_handle: i64, function_name: &str, ordinal: u32) -> i64 {
+pub fn ldr_get_procedure_address (module_handle: isize, function_name: &str, ordinal: u32) -> isize {
 
     unsafe 
     {   
-
         let ret: Option<i32>;
         let func_ptr: data::LdrGetProcedureAddress;
         let hmodule: PVOID = std::mem::transmute(module_handle);
-        let return_address: *mut c_void = std::mem::transmute(&u64::default());
+        let r = usize::default();
+        let return_address: *mut c_void = std::mem::transmute(&r);
         let return_address: *mut PVOID = std::mem::transmute(return_address);
-        let mut fun_name: *mut String = std::mem::transmute(&String::default());
+        let f: UnsafeCell<String> = String::default().into();
+        let mut fun_name: *mut String = std::mem::transmute(f.get());
 
         if function_name == ""
         {
@@ -578,7 +580,7 @@ pub fn ldr_get_procedure_address (module_handle: i64, function_name: &str, ordin
             {
                 if x == 0
                 {
-                    return *return_address as i64;
+                    return *return_address as isize;
                 } 
                 else 
                 {
